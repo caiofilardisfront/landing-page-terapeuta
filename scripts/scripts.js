@@ -1,59 +1,100 @@
-document.addEventListener("DOMContentLoaded", () => {
-        const track = document.querySelector(".carousel-track");
-        
-        // --- 1. LÓGICA DO INFINITO ---
-        // Pegamos todos os cards originais
-        const originalCards = Array.from(track.children);
-        
-        // Clonamos para garantir o loop sem buracos
-        originalCards.forEach(card => {
-            const clone = card.cloneNode(true);
-            clone.setAttribute('aria-hidden', 'true'); 
-            track.appendChild(clone);
+        // --- FAQ ACCORDION ---
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const item = btn.closest('.faq-item');
+                const answer = item.querySelector('.faq-answer');
+                const isOpen = item.classList.contains('open');
+                // Fecha todos
+                document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                    if (openItem !== item) {
+                        openItem.classList.remove('open');
+                        openItem.querySelector('.faq-answer').style.maxHeight = null;
+                    }
+                });
+                // Toggle atual
+                if (!isOpen) {
+                    item.classList.add('open');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                } else {
+                    item.classList.remove('open');
+                    answer.style.maxHeight = null;
+                }
+            });
         });
 
-        // --- 2. LÓGICA DA MODAL (LIGHTBOX) ---
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const closeBtn = document.querySelector('.modal-close');
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('testimonialCarousel');
+        const cards = document.querySelectorAll('.testimonial-card');
+        const btnPrev = document.querySelector('.btn-prev');
+        const btnNext = document.querySelector('.btn-next');
+        
+            // --- MENU HAMBURGUER MOBILE ---
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileToggle.classList.toggle('open');
+                });
+            }
 
-        // Função para abrir a modal
-        const openModal = (src) => {
-            modalImg.src = src;
-            modal.classList.add('active');
-            // Pausa a animação do fundo se quiser (opcional, via CSS já pausa no hover)
+        // Função para atualizar as classes (Ativo/Blur)
+        const updateClasses = () => {
+            const center = container.scrollLeft + (container.offsetWidth / 2);
+            
+            let closestCard = null;
+            let minDistance = Infinity;
+
+            // Encontrar o card mais próximo do centro
+            cards.forEach((card, index) => {
+                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                const distance = Math.abs(center - cardCenter);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+                
+                // Limpar classes anteriores
+                card.classList.remove('active', 'prev', 'next');
+            });
+
+            // Aplicar classes se encontrou
+            if (closestCard) {
+                closestCard.classList.add('active');
+                
+                const prevCard = closestCard.previousElementSibling;
+                const nextCard = closestCard.nextElementSibling;
+
+                if (prevCard) prevCard.classList.add('prev');
+                if (nextCard) nextCard.classList.add('next');
+            }
         };
 
-        // Função para fechar a modal
-        const closeModal = () => {
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modalImg.src = ''; // Limpa a imagem após fechar
-            }, 300);
-        };
+        // Ouvir o evento de scroll
+        container.addEventListener('scroll', updateClasses);
+        
+        // Rodar uma vez no início e no resize
+        updateClasses();
+        window.addEventListener('resize', updateClasses);
 
-        // Adicionar evento de clique em TODAS as imagens (originais e clones)
-        // Usamos delegação de evento no 'track' para pegar até os clones
-        track.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG' && e.target.classList.contains('t-print-img')) {
-                openModal(e.target.src);
-            }
+        // --- Lógica dos Botões ---
+        const scrollAmount = 340; // Largura do card + margem (aprox)
+
+        btnPrev.addEventListener('click', () => {
+            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         });
 
-        // Fechar ao clicar no X
-        closeBtn.addEventListener('click', closeModal);
-
-        // Fechar ao clicar fora da imagem (no fundo escuro)
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
+        btnNext.addEventListener('click', () => {
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         });
-
-        // Fechar com a tecla ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
+        
+        // Centralizar o primeiro item ao carregar
+        setTimeout(() => {
+             const firstCardWidth = cards[0].offsetWidth;
+             const containerCenter = container.offsetWidth / 2;
+             // Ajuste fino inicial se necessário, mas o padding CSS já ajuda
+             updateClasses(); 
+        }, 100);
     });

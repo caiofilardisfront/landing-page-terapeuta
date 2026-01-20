@@ -1,3 +1,12 @@
+/* FAQ Accordion */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.faq-item.open .faq-answer {
+    max-height: 500px; /* Valor grande suficiente para a resposta */
+}
 
 
       
@@ -13,6 +22,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        /* MENU MOBILE: Esconde o menu por padrão em telas pequenas */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100vw;
+                background: #fff;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+                padding: 20px 0;
+                z-index: 200;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .mobile-toggle {
+                display: block;
+                z-index: 201;
+            }
         }
 
         .logo {
@@ -121,15 +154,21 @@
 
         .badge-crp {
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.1rem;
             font-weight: 600;
             letter-spacing: 1px;
-            color: var(--text-sec);
-            border: 1px solid rgba(107, 90, 80, 0.2);
+           /*  color: var(--text-sec);
+            border: 1px solid rgba(107, 90, 80, 0.2); */
             padding: 8px 16px;
             border-radius: 20px;
             margin-bottom: 24px;
-            background: rgba(255, 255, 255, 0.3);
+            /* background: transparent; */
+        }
+
+        .badge-crp img {
+            height: 75px;
+            width: auto;
+            display: block;
         }
 
         .hero-title {
@@ -955,6 +994,8 @@
 
 /* --- ESTILOS DA SEÇÃO: DEPOIMENTOS (INFINITO) --- */
 
+/* --- ESTILOS DA SEÇÃO: DEPOIMENTOS (CARROSSEL FOCADO) --- */
+
 .testimonials-section {
     background-color: var(--bg-color);
     padding: 100px 0;
@@ -982,6 +1023,7 @@
     font-size: 1rem;
 }
 
+/* Ícone de Aspas Fundo */
 .t-quote-bg {
     position: absolute;
     top: 60px;
@@ -996,87 +1038,141 @@
     pointer-events: none;
 }
 
-/* --- ESTRUTURA DO CARROSSEL INFINITO --- */
-
+/* Container Relativo para posicionar botões */
 .carousel-wrapper {
-    width: 100%;
-    overflow: hidden; /* Esconde o que sai da tela */
     position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Container do Scroll */
 .carousel-container {
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel-track {
     display: flex;
-    gap: 30px; /* Espaço entre os cards */
-    width: max-content; /* Permite que a trilha seja maior que a tela */
+    overflow-x: auto;
+    gap: 0px; /* Gap removido para o cálculo do JavaScript ser mais preciso, usamos padding no card */
+    padding: 60px 50%; /* Padding lateral grande para centralizar o primeiro item */
+    scroll-behavior: smooth;
     
-    /* A Animação Contínua */
-    animation: scroll-infinite 40s linear infinite;
+    /* Esconder Scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE */
 }
 
-/* Pausar animação quando passar o mouse (para ler com calma) */
-.carousel-track:hover {
-    animation-play-state: paused;
+.carousel-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
-
-
-/* --- KEYFRAMES DA ANIMAÇÃO --- */
-@keyframes scroll-infinite {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        /* Movemos -50% porque o JavaScript vai duplicar o conteúdo.
-           Assim que chegar na metade (fim do primeiro set), ele volta pro 0 imperceptivelmente. */
-        transform: translateX(-50%);
-    }
-}
-
-/* --- ESTILO DOS CARDS (CLAROS E VISÍVEIS) --- */
+/* --- ESTILO DOS CARDS E EFEITO VISUAL --- */
 
 .testimonial-card {
-    width: 300px; /* Largura fixa */
-    flex-shrink: 0; /* Impede de esmagar */
-    border-radius: 16px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 10px 30px rgba(77, 54, 41, 0.08);
+    flex: 0 0 auto;
+    width: 320px; /* Largura base */
+    margin: 0 20px; /* Espaçamento real entre cards */
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Transição suave idêntica ao modelo */
     
-    /* Removido o blur e scale para garantir visibilidade total */
-    opacity: 1;
-    transform: scale(1); 
-    transition: transform 0.3s ease;
+    /* Estado Padrão (Inativo/Longe) */
+    transform: scale(0.85);
+    opacity: 0.6;
+    filter: blur(4px);
+    z-index: 1;
 }
 
-/* Leve destaque ao passar o mouse */
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(255, 131, 78, 0.2);
-}
-
+/* Imagem */
 .t-print-img {
     width: 100%;
     height: auto;
+    border-radius: 16px;
     display: block;
-    object-fit: contain; /* Garante que a imagem inteira apareça */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    background: #fff;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+/* --- ESTADOS DINÂMICOS (Aplicados via JS) --- */
+
+/* Card Ativo (Centro) - CLARO E VISÍVEL */
+.testimonial-card.active {
+    transform: scale(1.15); /* Aumenta 15% */
+    opacity: 1;
+    filter: blur(0px); /* Totalmente nítido */
+    z-index: 10;
+    box-shadow: 0 20px 60px rgba(255, 131, 78, 0.25);
+}
+
+/* Card Anterior e Próximo (Vizinhos) */
+.testimonial-card.prev,
+.testimonial-card.next {
+    transform: scale(0.95);
+    opacity: 0.8;
+    filter: blur(2px); /* Leve desfoque */
+    z-index: 5;
+}
+
+/* --- BOTÕES DE NAVEGAÇÃO (MODELO ADAPTADO) --- */
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    cursor: pointer;
+    z-index: 20;
+    
+    /* Efeito Glassmorphism do Modelo */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 12px;
+    border-radius: 50%;
+    color: #fff; /* Ícone branco */
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 131, 78, 0.8); /* Laranja ao passar o mouse */
+    border-color: transparent;
+}
+
+.nav-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 0;
+}
+
+/* Botão Anterior */
+.btn-prev {
+    left: 20px;
+    border: 1px solid #fff; /* Outline do modelo */
+}
+
+/* Botão Próximo */
+.btn-next {
+    right: 20px;
+    border: 2px solid #fff; /* Outline do modelo */
+}
+
+/* Responsividade Mobile */
+@media (max-width: 767px) {
     .testimonial-card {
         width: 260px;
+        margin: 0 10px;
     }
     
-    /* No celular pode rodar um pouco mais rápido se quiser */
-    .carousel-track {
-        gap: 20px;
-        animation-duration: 30s; 
+    .carousel-container {
+        padding: 40px 50%;
     }
+    
+    .btn-prev, .btn-next {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    
+    /* No mobile, botões ficam nas bordas extremas ou somem se preferir */
+    .btn-prev { left: 5px; }
+    .btn-next { right: 5px; }
 }
 
 /* --- ESTILOS DA SEÇÃO: LOCAL DE ATENDIMENTO & CONTATO --- */
