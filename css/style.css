@@ -1,0 +1,1539 @@
+/* --- VARIÁVEIS E RESET --- */
+        :root {
+            --bg-color: #FDF0EA;
+            --primary-color: #FF834E;
+            --primary-hover: #e06d3d;
+            --text-main: #4D3629;
+            --text-sec: #6B5A50;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Poppins', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- HEADER --- */
+        .site-header {
+            width: 100%;
+            padding: 20px 5%;
+            position: absolute; /* Header flutuante para elegância */
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo h3 {
+            font-family: var(--font-script);
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+
+        .logo span {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sec);
+            margin-top: -5px;
+            padding-left: 5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-sec);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Botão Padrão */
+        .btn {
+            background-color: var(--primary-color);
+            color: #fff; /* Contraste ajustado para branco */
+            padding: 12px 28px;
+            border-radius: 50px; /* Mais orgânico que 8px */
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 131, 78, 0.25);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Hamburger Mobile (Visual Only for CSS demo) */
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px; /* Compensar header */
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr; /* Texto um pouco maior que imagem */
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Coluna Texto */
+        .hero-content {
+            z-index: 10;
+            padding-right: 20px;
+        }
+
+        .badge-crp {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-sec);
+            border: 1px solid rgba(107, 90, 80, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 4rem; /* Tamanho editorial */
+            line-height: 1.1;
+            color: var(--text-main);
+            margin-bottom: 24px;
+        }
+
+        .hero-title span {
+            display: block;
+            font-style: italic; /* Toque sofisticado */
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-sec);
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-description strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .cta-hero {
+            padding: 16px 36px;
+            font-size: 1rem;
+        }
+
+        /* Coluna Imagem */
+        .hero-visual {
+            position: relative;
+            height: 85vh; /* Ocupa boa parte vertical */
+            display: flex;
+            align-items: flex-end; /* Alinha a imagem no chão */
+            justify-content: center;
+        }
+
+        /* O Círculo Orgânico de Fundo */
+        .bg-blob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 131, 78, 0.08); /* Laranja muito suave */
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; /* Forma orgânica */
+            z-index: 1;
+            animation: morph 8s ease-in-out infinite;
+        }
+
+        /* A Imagem da Profissional */
+        .professional-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajuste conforme a foto real */
+            object-position: top center;
+            position: relative;
+            z-index: 2;
+            /* Máscara de gradiente suave para fundir com o chão */
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+
+        /* Elementos Flutuantes (Brilhos) */
+        .sparkle {
+            position: absolute;
+            z-index: 3;
+            color: var(--primary-color);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .s-1 { top: 20%; right: 10%; width: 30px; animation-delay: 0s; }
+        .s-2 { top: 30%; left: 5%; width: 20px; animation-delay: 1.5s; opacity: 0.6; }
+        .s-3 { bottom: 40%; right: 20%; width: 15px; animation-delay: 0.5s; opacity: 0.8; }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 968px) {
+            .site-header { padding: 15px 20px; }
+            .nav-menu { display: none; } /* Em produção, usar JS para toggle */
+            .mobile-toggle { display: block; }
+            
+            .hero-section {
+                padding-top: 100px;
+                height: auto;
+                min-height: auto;
+                display: block;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title { font-size: 2.8rem; }
+            
+            .hero-visual {
+                height: 50vh;
+                margin-top: 20px;
+            }
+            
+            .bg-blob { width: 300px; height: 300px; }
+        }
+
+/* --- ESTILOS ESPECÍFICOS DA SEÇÃO SERVIÇOS --- */
+    
+    .services-section {
+        background-color: var(--bg-color); /* Continuidade do Fundo */
+        padding: 100px 20px;
+        position: relative;
+    }
+
+    /* Cabeçalho da Seção */
+    .section-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 60px auto;
+    }
+
+    .section-title {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        color: var(--text-main);
+        margin-bottom: 16px;
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Detalhe decorativo sutil sob o título */
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary-color);
+        margin: 10px auto 0 auto;
+        border-radius: 2px;
+        opacity: 0.6;
+    }
+
+    .section-subtitle {
+        font-family: var(--font-sans);
+        color: var(--text-sec);
+        font-size: 1.1rem;
+        font-weight: 300;
+    }
+
+    /* Grid Layout */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 Colunas Desktop */
+        gap: 30px;
+        max-width: var(--container-width);
+        margin: 0 auto;
+    }
+
+    /* Card Design */
+    .service-card {
+        background-color: #ffffff;
+        padding: 40px 30px;
+        border-radius: 16px; /* Bordas suaves */
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito elástico suave */
+        border: 1px solid rgba(107, 90, 80, 0.05); /* Borda quase invisível */
+        box-shadow: 0 10px 30px rgba(77, 54, 41, 0.03); /* Sombra difusa */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%; /* Garante altura igual */
+    }
+
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(255, 131, 78, 0.15);
+        border-color: rgba(255, 131, 78, 0.3);
+    }
+
+    /* Ícone Container */
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 1px solid var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        color: var(--text-main);
+        transition: all 0.3s ease;
+        background-color: transparent;
+    }
+
+    /* Mudança de cor no hover do card */
+    .service-card:hover .icon-wrapper {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: rgba(255, 131, 78, 0.05);
+    }
+
+    .icon-wrapper svg {
+        width: 32px;
+        height: 32px;
+        stroke-width: 1.5; /* Linhas finas e elegantes */
+    }
+
+    /* Tipografia do Card */
+    .card-title {
+        font-family: var(--font-sans);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: 12px;
+    }
+
+    .card-desc {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        color: var(--text-sec);
+        line-height: 1.6;
+    }
+
+    /* Área do Botão Final */
+    .section-footer {
+        margin-top: 60px;
+        text-align: center;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px) {
+        .services-grid {
+            grid-template-columns: repeat(2, 1fr); /* 2 Colunas Tablet */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .services-grid {
+            grid-template-columns: 1fr; /* 1 Coluna Mobile */
+            gap: 20px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .service-card {
+            padding: 30px 20px;
+        }
+    }
+
+    /* --- ESTILOS ESPECÍFICOS DA SEÇÃO SOBRE --- */
+
+    .about-section {
+        background-color: var(--bg-color);
+        padding: 120px 20px;
+        position: relative;
+        overflow: hidden; /* Para conter elementos flutuantes */
+    }
+
+    .about-container {
+        max-width: var(--container-width);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 50% Texto / 50% Imagem */
+        gap: 80px;
+        align-items: center;
+    }
+
+    /* --- COLUNA VISUAL (IMAGEM) --- */
+    .about-visual {
+        position: relative;
+        order: 2; /* Desktop: Direita */
+    }
+
+    .professional-photo-wrapper {
+        position: relative;
+        z-index: 1;
+        border-radius: 160px 160px 20px 20px; /* Arco superior elegante */
+        overflow: hidden;
+        box-shadow: 20px 20px 0px rgba(255, 131, 78, 0.1); /* Sombra sólida decorativa */
+        line-height: 0; /* Remove espaço extra de imagem */
+    }
+
+    .professional-photo {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+
+    /* Efeito suave de zoom ao passar o mouse na foto */
+    .professional-photo-wrapper:hover .professional-photo {
+        transform: scale(1.03);
+    }
+
+    /* CARD FLUTUANTE (ID) */
+    .id-card-float {
+        position: absolute;
+        bottom: 40px;
+        left: -40px; /* Flutuando para fora da imagem */
+        background-color: #ffffff;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(77, 54, 41, 0.1);
+        z-index: 2;
+        border-left: 4px solid var(--primary-color);
+        min-width: 220px;
+    }
+
+    .id-card-name {
+        font-family: var(--font-script);
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .id-card-crp {
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-sec);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* --- COLUNA TEXTO --- */
+    .about-content {
+        order: 1; /* Desktop: Esquerda */
+    }
+
+    .about-title {
+        font-family: var(--font-serif);
+        font-size: 3rem;
+        color: var(--text-main);
+        margin-bottom: 50px;
+        line-height: 1.1;
+    }
+
+    /* Lista de Tópicos Estilizada */
+    .topic-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        position: relative;
+    }
+
+    /* Linha decorativa vertical conectando os tópicos */
+    .topic-list::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        bottom: 10px;
+        width: 1px;
+        background: linear-gradient(to bottom, var(--primary-color), transparent);
+        opacity: 0.3;
+    }
+
+    .topic-item {
+        padding-left: 30px; /* Espaço para a linha vertical */
+        position: relative;
+    }
+
+    /* Ponto indicador na linha */
+    .topic-item::after {
+        content: '';
+        position: absolute;
+        left: -3px;
+        top: 6px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+    }
+
+    .topic-title {
+        font-family: var(--font-sans);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .topic-text {
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        color: var(--text-sec);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* --- RESPONSIVIDADE --- */
+    @media (max-width: 968px) {
+        .about-container {
+            grid-template-columns: 1fr;
+            gap: 50px;
+        }
+
+        /* Mobile: Imagem no Topo */
+        .about-visual {
+            order: 1;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 500px; /* Limite visual */
+            padding-bottom: 20px; /* Espaço para o card flutuante */
+        }
+
+        .about-content {
+            order: 2;
+            padding: 0 10px;
+        }
+
+        .about-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .professional-photo-wrapper {
+            /* Ajuste da forma para mobile */
+            border-radius: 20px;
+            box-shadow: 10px 10px 0px rgba(255, 131, 78, 0.1);
+        }
+
+        /* Ajuste do Card Flutuante no Mobile */
+        .id-card-float {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -20px; /* Caindo levemente para fora */
+            width: 80%;
+            text-align: center;
+            border-left: none;
+            border-bottom: 4px solid var(--primary-color); /* Borda muda para baixo */
+        }
+    }
+
+    /* --- ESTILOS DA SEÇÃO: MEUS SERVIÇOS (DETALHADA) --- */
+
+.my-services-section {
+    background-color: var(--bg-color); /* #FDF0EA */
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ms-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr; /* Visual um pouco menor que texto */
+    gap: 60px;
+    align-items: center;
+}
+
+/* --- COLUNA VISUAL (ESQUERDA) --- */
+.ms-visual-col {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 500px;
+}
+
+/* Bloco Decorativo Laranja Médio */
+.ms-deco-block {
+    position: absolute;
+    top: 40px; /* Deslocado para baixo */
+    left: 20px; /* Deslocado para direita */
+    width: 85%;
+    height: 85%;
+    background-color: #FFB48F; /* Cor solicitada */
+    z-index: 1;
+    border-radius: 100px 0 100px 0; /* Forma orgânica sofisticada */
+    opacity: 0.8;
+}
+
+/* Imagem da Profissional */
+.ms-photo {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    height: auto;
+    object-fit: cover;
+    /* Máscara de gradiente para fundir a base */
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    transition: transform 0.4s ease;
+}
+
+.ms-visual-col:hover .ms-photo {
+    transform: scale(1.02); /* Leve zoom ao passar o mouse */
+}
+
+/* --- COLUNA CONTEÚDO (DIREITA) --- */
+.ms-content-col {
+    padding-left: 20px;
+}
+
+.ms-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 40px;
+    line-height: 1.1;
+}
+
+/* Lista de Serviços */
+.ms-list {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+.ms-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 24px;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    color: var(--text-sec); /* Marrom médio */
+    line-height: 1.5;
+    transition: transform 0.3s ease;
+}
+
+/* Efeito Hover no Item da Lista */
+.ms-item:hover {
+    transform: translateX(10px); /* Desliza para a direita */
+}
+
+/* Ícone de Estrela/Brilho (SVG Wrapper) */
+.ms-icon-star {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+    margin-top: 2px; /* Alinhamento ótico com texto */
+}
+
+/* Botão CTA Específico */
+.btn-ms {
+    margin-top: 10px;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 968px) {
+    .ms-container {
+        grid-template-columns: 1fr; /* Empilha verticalmente */
+        gap: 40px;
+    }
+
+    /* Imagem vai para o topo */
+    .ms-visual-col {
+        order: 1;
+        min-height: auto;
+        margin-bottom: 20px;
+    }
+
+    .ms-deco-block {
+        width: 80%;
+        left: 10%; /* Centraliza o bloco decorativo */
+    }
+
+    .ms-photo {
+        width: 70%; /* Reduz imagem no mobile */
+        margin: 0 auto;
+        display: block;
+    }
+
+    /* Texto abaixo */
+    .ms-content-col {
+        order: 2;
+        padding-left: 0;
+        text-align: center; /* Centraliza texto no mobile */
+    }
+
+    .ms-title {
+        font-size: 2.5rem;
+    }
+
+    .ms-item {
+        justify-content: center; /* Centraliza itens da lista */
+        text-align: left; /* Mantém leitura do texto alinhada à esquerda dentro do bloco centralizado */
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .ms-item {
+        /* Ajuste fino para mobile: Ícone esquerda, texto direita, bloco centralizado */
+        justify-content: flex-start; 
+        text-align: left;
+    }
+
+    .btn-ms {
+        width: 100%; /* Botão largura total ou ajustado */
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO: CLÍNICA EFETIVA --- */
+
+.clinica-section {
+    background-color: var(--bg-color); /* #FDF0EA */
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ce-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 50% Texto / 50% Visual */
+    gap: 80px;
+    align-items: center;
+}
+
+/* --- COLUNA TEXTO (ESQUERDA) --- */
+.ce-content-col {
+    order: 1; /* Padrão Desktop */
+}
+
+.ce-label {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.ce-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-bottom: 24px;
+    line-height: 1.1;
+}
+
+.ce-description {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    color: var(--text-sec);
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Lista de Benefícios (Checklist) */
+.ce-benefits {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+.ce-benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-family: var(--font-sans);
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* Ícone de Check Personalizado */
+.ce-check-icon {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 131, 78, 0.15); /* Fundo laranja suave */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.ce-check-icon svg {
+    width: 12px;
+    height: 12px;
+    stroke-width: 3;
+}
+
+/* --- COLUNA VISUAL (DIREITA) --- */
+.ce-visual-col {
+    order: 2; /* Padrão Desktop */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Elemento Decorativo de Fundo (Quadrado Rotacionado) */
+.ce-bg-shape {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    background-color: #FFB48F; /* Laranja Pêssego Médio */
+    border-radius: 40px;
+    transform: rotate(6deg); /* Rotação sutil */
+    z-index: 1;
+    opacity: 0.6;
+    transition: transform 0.5s ease;
+}
+
+/* Efeito interativo no fundo */
+.ce-visual-col:hover .ce-bg-shape {
+    transform: rotate(0deg) scale(0.95);
+}
+
+/* A Imagem Principal */
+.ce-image-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(77, 54, 41, 0.08);
+}
+
+.ce-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Card Flutuante "Mentoria" */
+.ce-float-card {
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
+    background: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.ce-float-text {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 968px) {
+    .ce-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    /* Inversão no Mobile: Visual Primeiro para impacto, ou Texto?
+       Seguindo o padrão "About", imagem primeiro engaja mais. */
+    .ce-visual-col {
+        order: 1;
+        margin-bottom: 20px;
+    }
+
+    .ce-content-col {
+        order: 2;
+        text-align: center; /* Centralizar texto no mobile */
+    }
+
+    .ce-description {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 500px;
+    }
+
+    .ce-benefit-item {
+        justify-content: center; /* Centralizar lista */
+    }
+
+    .ce-bg-shape {
+        width: 70%;
+        height: 80%;
+    }
+    
+    .ce-float-card {
+        right: 50%;
+        transform: translateX(50%); /* Centraliza o card flutuante */
+        bottom: -25px;
+        width: max-content;
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO: DEPOIMENTOS (INFINITO) --- */
+
+.testimonials-section {
+    background-color: var(--bg-color);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.t-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
+}
+
+.t-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.t-subtitle {
+    font-family: var(--font-sans);
+    color: var(--text-sec);
+    font-size: 1rem;
+}
+
+.t-quote-bg {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-serif);
+    font-size: 15rem;
+    line-height: 0;
+    color: var(--primary-color);
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* --- ESTRUTURA DO CARROSSEL INFINITO --- */
+
+.carousel-wrapper {
+    width: 100%;
+    overflow: hidden; /* Esconde o que sai da tela */
+    position: relative;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 30px; /* Espaço entre os cards */
+    width: max-content; /* Permite que a trilha seja maior que a tela */
+    
+    /* A Animação Contínua */
+    animation: scroll-infinite 40s linear infinite;
+}
+
+/* Pausar animação quando passar o mouse (para ler com calma) */
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+
+
+/* --- KEYFRAMES DA ANIMAÇÃO --- */
+@keyframes scroll-infinite {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Movemos -50% porque o JavaScript vai duplicar o conteúdo.
+           Assim que chegar na metade (fim do primeiro set), ele volta pro 0 imperceptivelmente. */
+        transform: translateX(-50%);
+    }
+}
+
+/* --- ESTILO DOS CARDS (CLAROS E VISÍVEIS) --- */
+
+.testimonial-card {
+    width: 300px; /* Largura fixa */
+    flex-shrink: 0; /* Impede de esmagar */
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(77, 54, 41, 0.08);
+    
+    /* Removido o blur e scale para garantir visibilidade total */
+    opacity: 1;
+    transform: scale(1); 
+    transition: transform 0.3s ease;
+}
+
+/* Leve destaque ao passar o mouse */
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 131, 78, 0.2);
+}
+
+.t-print-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Garante que a imagem inteira apareça */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .testimonial-card {
+        width: 260px;
+    }
+    
+    /* No celular pode rodar um pouco mais rápido se quiser */
+    .carousel-track {
+        gap: 20px;
+        animation-duration: 30s; 
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO: LOCAL DE ATENDIMENTO & CONTATO --- */
+
+.location-section {
+    background-color: var(--bg-color); /* #FDF0EA */
+    padding: 100px 0;
+    position: relative;
+    border-top: 1px solid rgba(77, 54, 41, 0.05); /* Separação sutil */
+}
+
+.loc-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Texto menor, Galeria maior */
+    gap: 60px;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* --- COLUNA ESQUERDA: INFORMAÇÕES --- */
+.loc-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.loc-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.loc-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text-sec);
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* Lista de Contatos */
+.contact-list {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start; /* Alinha topo caso o endereço quebre linha */
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* Ícone dentro de Círculo */
+.icon-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid rgba(77, 54, 41, 0.2); /* Borda fina marrom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary-color);
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover .icon-circle {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.icon-circle svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+}
+
+/* Texto do Contato */
+.contact-text h4 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--text-sec);
+    font-weight: 400;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contact-text p {
+    font-family: var(--font-serif); /* Toque elegante no dado real */
+    font-size: 1.1rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+/* --- COLUNA DIREITA: GALERIA (SLIDER CSS) --- */
+.loc-gallery-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+/* O Container com Scroll */
+.loc-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding-bottom: 20px; /* Espaço para scrollbar ou sombra */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Oculta scrollbar Firefox */
+}
+
+.loc-slider::-webkit-scrollbar {
+    display: none; /* Oculta scrollbar Chrome/Safari */
+}
+
+/* As Fotos do Consultório */
+.office-photo {
+    flex: 0 0 85%; /* Ocupa 85% da largura para mostrar que tem mais */
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    box-shadow: 0 10px 20px rgba(77, 54, 41, 0.1);
+    position: relative;
+}
+
+.office-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.office-photo:hover img {
+    transform: scale(1.05);
+}
+
+/* Legenda da foto (Opcional) */
+.photo-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 968px) {
+    .loc-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .loc-info-col {
+        order: 1; /* Informação primeiro */
+    }
+
+    .loc-gallery-wrapper {
+        order: 2;
+        width: 100vw; /* Estoura a largura do container */
+        margin-left: -20px; /* Compensa o padding do container */
+        padding-left: 20px; /* Adiciona respiro inicial */
+    }
+
+    .office-photo {
+        flex: 0 0 85%; /* Mobile: Mostra quase tudo, com pontinha do próximo */
+        height: 300px;
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO: FAQ (ACORDEÃO) --- */
+
+.faq-section {
+    background-color: var(--bg-color); /* #FDF0EA */
+    padding: 100px 20px;
+    position: relative;
+}
+
+/* Container mais estreito para leitura confortável */
+.faq-container {
+    max-width: 800px; 
+    margin: 0 auto;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.faq-subtitle {
+    font-family: var(--font-sans);
+    color: var(--text-sec);
+    font-size: 1rem;
+}
+
+/* O Item do Acordeão */
+.faq-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    /* Fundo levemente mais escuro que o background geral (Pêssego/Laranja suave) */
+    background-color: rgba(255, 131, 78, 0.08); 
+    border: 1px solid rgba(77, 54, 41, 0.03);
+    transition: all 0.3s ease;
+}
+
+.faq-item.active {
+    background-color: #fff; /* Destaque branco quando aberto */
+    box-shadow: 0 10px 25px rgba(77, 54, 41, 0.05);
+    border-color: rgba(255, 131, 78, 0.2);
+}
+
+/* O Botão da Pergunta (Cabeçalho do Item) */
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+}
+
+.faq-q-text {
+    font-family: var(--font-serif); /* Serifada para elegância nas perguntas */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    padding-right: 20px;
+}
+
+/* O Ícone da Seta */
+.faq-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+/* Rotação da seta quando ativo */
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+/* O Conteúdo da Resposta (Hidden by default) */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Transição suave via JS */
+}
+
+.faq-answer-inner {
+    padding: 0 25px 25px 25px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text-sec);
+    line-height: 1.6;
+}
+
+/* CTA Final da Seção */
+.faq-footer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.faq-footer p {
+    font-family: var(--font-sans);
+    color: var(--text-sec);
+    margin-bottom: 20px;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 600px) {
+    .faq-title {
+        font-size: 2rem;
+    }
+    
+    .faq-question {
+        padding: 15px 20px;
+    }
+    
+    .faq-q-text {
+        font-size: 1rem;
+    }
+}
+
+/* --- ESTILOS DA SEÇÃO: RODAPÉ (FOOTER) --- */
+
+.site-footer {
+    background-color: var(--bg-color); /* #FDF0EA */
+    padding: 60px 0 30px 0;
+    border-top: 1px solid rgba(77, 54, 41, 0.1); /* Linha divisória sutil */
+    position: relative;
+    font-family: var(--font-sans);
+}
+
+.footer-container {
+    max-width: var(--container-width); /* Mesmo container global (ex: 1200px) */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Área Superior: Logo e Redes Sociais */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Logo (Reutilizando estilo do Header para consistência) */
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.footer-logo h3 {
+    font-family: var(--font-script, 'Great Vibes', cursive); /* Fallback cursive */
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: 400;
+    margin: 0;
+}
+
+.footer-logo span {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-sec);
+    margin-top: -5px;
+    padding-left: 5px;
+}
+
+/* Ícones de Redes Sociais */
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: var(--text-main);
+    border: 1px solid rgba(77, 54, 41, 0.1);
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 131, 78, 0.3);
+}
+
+.social-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Área Inferior: Copyright e Créditos */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(77, 54, 41, 0.05);
+    font-size: 0.85rem;
+    color: var(--text-sec);
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.developer-credit {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.developer-credit:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .footer-logo {
+        align-items: center; /* Centraliza logo no mobile */
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
